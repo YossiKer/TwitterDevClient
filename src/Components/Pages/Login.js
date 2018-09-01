@@ -6,7 +6,10 @@ export default class Login extends Component {
         super();
         
         this.state = {
-            username: ''
+            username: '',
+            style: {
+                marginTop: '10vh'
+            }
         }
     }
 
@@ -23,15 +26,17 @@ export default class Login extends Component {
 
     render() {
         return (
-            <div id="log-in">
-                <br/>
-                <hr/>
-                <h1>Login: </h1>
-                <hr/>
-                <input value={this.state.username} type="text" className="form-control" onInput={this.handleInput.bind(this)}/>
-                <br/>
-                <button className="btn btn-primary" onClick={this.HandleLogin.bind(this)}>Login</button>
-                <hr/>
+            <div id="log-in" className="row" style={this.state.style}>
+                <form className="card col-lg-6 offset-lg-3 border-primary" onSubmit={this.HandleLogin.bind(this)}>
+                    <br/>
+                    <h1>Login: </h1>
+                    <br/>
+                    <h4>Username:</h4>
+                    <input value={this.state.username} type="text" className="form-control" onInput={this.handleInput.bind(this)}/>
+                    <br/>
+                    <button type="submit" className="btn btn-primary col-lg-2 offset-lg-5">Login</button>
+                    <br/>
+                </form>
             </div>
         );
     }
