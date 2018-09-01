@@ -1,0 +1,4 @@
+.far:hover, .fas:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}

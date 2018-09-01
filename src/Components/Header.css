@@ -1,0 +1,8 @@
+#header {
+    height: 7vh;
+}
+
+#log-out-link:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
