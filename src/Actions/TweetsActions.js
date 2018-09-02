@@ -1,4 +1,4 @@
-const tweets = [
+/*const tweets = [
     {
         username: 'Alexandru Serrano',
         content: "I bet we'll get the best. look CRISP ugh might as the reason most attention… lol All cats your nintendo?",
@@ -59,20 +59,36 @@ const tweets = [
         likes: [],
         retweets: []
     }
-];
+];*/
+
+import axios from 'axios';
 
 export const getTweets = () => {
     return (dispatch) => {
         dispatch({
             type: 'GET_TWEETS_START'
         });
-
-        setTimeout(() => {
-            dispatch({
-                type: 'GET_TWEETS_SUCCEED',
-                payload: tweets
+        console.log('requesting server');
+        axios.get('http://localhost:3000/tweets',{withCredentials: true})
+            .then((response) => {
+                const { data } = response;
+                let tweets = [];
+                if (data.length !== 0) {
+                    tweets = data;
+                }
+                console.log('got response', tweets);
+                dispatch({
+                    type: 'GET_TWEETS_SUCCEED',
+                    payload: tweets
+                });
+            })
+            .catch((error) => {
+                console.log('got error', error);
+                dispatch({
+                    type: 'GET_TWEETS_FAILED',
+                    payload: error
+                });
             });
-        }, 1000);
     } 
 }
 

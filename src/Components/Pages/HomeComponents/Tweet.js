@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
+import { addLike } from '../../../Actions/LikesActions';
+import { addRetweet } from '../../../Actions/RetweetsActions';
 
 import './Tweet.css';
 
-export default class Tweet extends Component {
+class Tweet extends Component {
     constructor() {
         super();
 
@@ -13,14 +17,26 @@ export default class Tweet extends Component {
     }
 
     handleLikeClick() {
+        const newLike = {
+            username: window.localStorage.getItem('username')
+        }
+
+        this.props.addLike(newLike);
+
         this.setState({
-            liked: !this.state.liked
+            liked: true
         });
     }
 
     handleRetweetClick() {
+        const newRetweet = {
+            username: window.localStorage.getItem('username')
+        }
+
+        this.props.addRetweet(newRetweet);
+
         this.setState({
-            retweeted: !this.state.retweeted
+            retweeted: true
         });
     }
 
@@ -47,3 +63,12 @@ export default class Tweet extends Component {
         );
     }
 }
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addLike: (newLike) => dispatch(addLike(newLike)),
+        addRetweet: (newRetweet) => dispatch(addRetweet(newRetweet))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Tweet);

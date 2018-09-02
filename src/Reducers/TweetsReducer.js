@@ -1,5 +1,3 @@
-import { bindActionCreators } from "../../../../../AppData/Local/Microsoft/TypeScript/2.9/node_modules/@types/react-redux/node_modules/redux";
-
 const initialState = {
     fetching: false,
     fetched: false,
