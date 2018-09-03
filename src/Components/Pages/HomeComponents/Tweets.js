@@ -13,8 +13,8 @@ export default class Tweets extends Component {
     }
 
     render() {
-        const tweetsElements = this.props.tweets.map((tweet, id) => {
-            return <Tweet key={id} username={tweet.username} content={tweet.content} likes={tweet.likes} retweets={tweet.retweets}/>
+        const tweetsElements = this.props.tweets.map((tweet) => {
+            return <Tweet key={tweet.id} id={tweet.id} username={tweet.username} content={tweet.content} likes={tweet.likesCount} retweets={tweet.retweetsCount}/>
         });
 
         return (

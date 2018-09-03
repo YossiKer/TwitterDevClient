@@ -1,11 +1,18 @@
 import axios from 'axios';
 
-export const addLike = (like) => {
+const baseUrl = 'http://localhost:3000/'
+
+export const addLike = (tweetId, like) => {
+    console.log(like);
     return (dispatch) => {
         dispatch({type: 'ADD_LIKE_START'})
 
         console.log('requesting server');
-        axios.get('')
+        axios.post(baseUrl + 'tweets/' + tweetId + '/likes',
+                   {
+                       username: like.username
+                   },
+                   {withCredentials: true})
             .then((response) => {
                 console.log('got response', response);
                 dispatch({
