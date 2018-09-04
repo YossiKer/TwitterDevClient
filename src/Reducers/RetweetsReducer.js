@@ -15,11 +15,21 @@ const RetweetsReducer = (state = initialState, action) => {
                 adding: true
             };
         case 'ADD_RETWEET_SUCCEED': 
+            const { post_id, username, timestamp, tweet_username, tweet_content} = action.payload;
+            
+            let newRetweet = {
+                tweet_id: parseInt(post_id),
+                retweet_user: username,
+                timestamp: timestamp,
+                tweet_user: tweet_username,
+                content: tweet_content
+            }
+
             return {
                 ...state,
                 adding: false,
                 added: true,
-                retweets: state.retweets.concat(action.payload)
+                retweets: state.retweets.concat(newRetweet)
             };
         case 'ADD_RETWEET_FAILED':
             return {

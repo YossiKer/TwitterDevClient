@@ -8,6 +8,8 @@ const initialState = {
 };
 
 const TweetsReducer = (state = initialState, action) => {
+    let newTweets;
+
     switch(action.type) {
         case 'GET_TWEETS_START':
             return {
@@ -46,6 +48,23 @@ const TweetsReducer = (state = initialState, action) => {
                 adding: false,
                 added: false,
                 error: action.payload
+            };
+        case 'ADD_LIKE_SUCCEED': 
+            newTweets = state.tweets.filter((t) => true);
+            newTweets.find((t) => t.id == action.payload.post_id).likesCount++;
+
+            return {
+                ...state,
+                tweets: newTweets
+            };
+        case 'ADD_RETWEET_SUCCEED':
+            newTweets = state.tweets.filter((t) => true);
+            console.log(action)
+            state.tweets.filter((t) => true).find((t) => t.id == action.payload.post_id).retweetsCount++;
+
+            return {
+                ...state,
+                tweets: newTweets
             };
         default: 
             return state;

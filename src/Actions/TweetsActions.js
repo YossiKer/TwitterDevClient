@@ -15,7 +15,7 @@ export const getTweets = () => {
                 if (data.length !== 0) {
                     tweets = data;
                 }
-                console.log('got response', tweets);
+
                 dispatch({
                     type: 'GET_TWEETS_SUCCEED',
                     payload: tweets

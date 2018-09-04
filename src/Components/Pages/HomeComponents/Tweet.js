@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { addLike } from '../../../Actions/LikesActions';
-import { addRetweet } from '../../../Actions/RetweetsActions';
-import { getTweets } from '../../../Actions/TweetsActions';
+import { addRetweet, getRetweets } from '../../../Actions/RetweetsActions';
 
 import './Tweet.css';
 
@@ -17,13 +16,25 @@ class Tweet extends Component {
         };
     }
 
+    componentWillMount() {
+        this.props.getRetweets();
+
+    }
+
+    componentWillUpdate() {
+        if (this.props.retweetsData.find((r) => r.tweet_id == this.props.id) && !this.state.retweeted) {
+            this.setState({
+                retweeted: true
+            })
+        }
+    }
+
     handleLikeClick() {
         const newLike = {
             username: window.localStorage.getItem('username')
         }
-        console.log(newLike);
+
         this.props.addLike(this.props.id, newLike);
-        this.props.getTweets();
 
         this.setState({
             liked: true
@@ -32,13 +43,12 @@ class Tweet extends Component {
 
     handleRetweetClick() {
         const newRetweet = {
-            username: window.localStorage.getItem('username')
+            username: window.localStorage.getItem('username'),
+            tweet_username: this.props.username,
+            tweet_content: this.props.content
         }
 
-        this.props.addRetweet(newRetweet);
-        this.props.getTweets();
-
-        console.log(this.props.tweets);
+        this.props.addRetweet(this.props.id, newRetweet);
 
         this.setState({
             retweeted: true
@@ -71,15 +81,16 @@ class Tweet extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        tweets: state.tweets.tweets
+        tweets: state.tweets.tweets,
+        retweetsData: state.retweets.retweets.filter((r) => r.retweet_user === window.localStorage.getItem('username'))
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addLike: (tweetId, newLike) => dispatch(addLike(tweetId, newLike)),
-        addRetweet: (newRetweet) => dispatch(addRetweet(newRetweet)),
-        getTweets: () => dispatch(getTweets())
+        addRetweet: (tweetId, newRetweet) => dispatch(addRetweet(tweetId, newRetweet)),
+        getRetweets: () => dispatch(getRetweets())
     }
 }
 
