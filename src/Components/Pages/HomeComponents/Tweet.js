@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { addLike } from '../../../Actions/LikesActions';
 import { addRetweet, getRetweets } from '../../../Actions/RetweetsActions';
 
+import { Manager, Reference, Popper } from 'react-popper';
+
 import './Tweet.css';
 
 class Tweet extends Component {
@@ -18,7 +20,6 @@ class Tweet extends Component {
 
     componentWillMount() {
         this.props.getRetweets();
-
     }
 
     componentWillUpdate() {
